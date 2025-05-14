@@ -2,13 +2,13 @@ package org.combs.authentication_service.service;
 
 
 import lombok.RequiredArgsConstructor;
-import org.combs.authentication_service.entity.User;
-import org.combs.authentication_service.repository.UserRepository;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.io.StringReader;
 
+/*
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -31,3 +31,4 @@ public class UserService {
 
     }
 }
+*/

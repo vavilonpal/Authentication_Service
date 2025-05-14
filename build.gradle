@@ -1,10 +1,10 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.5'
+    id 'org.springframework.boot' version '3.1.9'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'org.combs'
+group = 'org.combs.micro'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -24,15 +24,15 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "2024.0.1")
+    set('springCloudVersion', "2022.0.5")
 }
 
 dependencies {
-    implementation 'org.springframework.security:spring-security-oauth2-authorization-server:1.4.3'
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-authorization-server"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.7.3'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
