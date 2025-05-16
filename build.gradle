@@ -28,11 +28,17 @@ ext {
 }
 
 dependencies {
-    implementation "org.springframework.boot:spring-boot-starter-oauth2-authorization-server"
+    //flyway && data
+    implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.7.3'
+
+    //security
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-authorization-server"
+    //web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //eureka
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
