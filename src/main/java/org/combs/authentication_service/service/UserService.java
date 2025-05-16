@@ -3,32 +3,49 @@ package org.combs.authentication_service.service;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.stereotype.Repository;
+import org.combs.authentication_service.entity.User;
+import org.combs.authentication_service.exeptions.UserNotFoundException;
+import org.combs.authentication_service.exeptions.User
+import org.combs.authentication_service.mapper.UserMapper;
+import org.combs.authentication_service.repository.UserRepository;
+import org.combs.authentication_service.request.UserRegisterRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.StringReader;
-
-/*
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private final UserMapper userMapper;
     private final UserRepository userRepository;
 
 
-    public User getUserByUserName(String username){
+    public User getUserByUserName(String username) {
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found by name:" + username));
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found by id:" + id));
+    }
+
+    public User createUser(UserRegisterRequest request) {
+        User user = userMapper.fromRequestToUser(request);
+
+        return userRepository.save(user);
+    }
+
+    public User updateUser(Long id, User user) {
 
     }
-    public User getUserById(Long id){
+
+    public void deleteUser(User user) {
 
     }
-    public User createUser(User user){
 
+
+    public boolean isExistsByUsername(String username){
+        return userRepository.existsByUsername(username);
     }
-    public User updateUser(Long id, User user){
-
-    }
-    public void deleteUser(User user){
-
+    public boolean isExistsByEmail(String email){
+        return userRepository.existsByEmail(email);
     }
 }
-*/
