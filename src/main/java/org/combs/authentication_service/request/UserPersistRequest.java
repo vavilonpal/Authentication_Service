@@ -15,7 +15,7 @@ import org.combs.authentication_service.validation.annotations.UserNameNotOccupy
 @Getter
 @Setter
 @PasswordMatch
-public class UserRegisterRequest {
+public class UserPersistRequest {
 
     @NotBlank(message = "Username is empty")
     @Size(min = 4, max = 20, message = "Length of username should be within 4 and 20 chars")
