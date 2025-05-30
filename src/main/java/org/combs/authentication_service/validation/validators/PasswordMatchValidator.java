@@ -2,13 +2,15 @@ package org.combs.authentication_service.validation.validators;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.extern.slf4j.Slf4j;
 import org.combs.authentication_service.validation.annotations.PasswordMatch;
-import org.combs.authentication_service.request.UserRegisterRequest;
+import org.combs.authentication_service.request.UserPersistRequest;
 
-public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch, UserRegisterRequest> {
+@Slf4j
+public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch, UserPersistRequest> {
 
     @Override
-    public boolean isValid(UserRegisterRequest userRequest, ConstraintValidatorContext context) {
+    public boolean isValid(UserPersistRequest userRequest, ConstraintValidatorContext context) {
         String password = userRequest.getPassword();
         String passwordConfirm = userRequest.getPasswordConfirm();
 
@@ -16,8 +18,10 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
             return false;
         }
         if (!password.equals(passwordConfirm)){
+            log.info("Passwrod doesnt match");
             return false;
         }
+        userRequest.setPasswordsIsMatch(true);
         return true;
     }
 }

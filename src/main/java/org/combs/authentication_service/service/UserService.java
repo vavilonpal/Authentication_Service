@@ -5,10 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 import org.combs.authentication_service.entity.User;
 import org.combs.authentication_service.exeptions.UserNotFoundException;
-import org.combs.authentication_service.exeptions.User
 import org.combs.authentication_service.mapper.UserMapper;
 import org.combs.authentication_service.repository.UserRepository;
-import org.combs.authentication_service.request.UserRegisterRequest;
+import org.combs.authentication_service.request.UserPersistRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,18 +26,19 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found by id:" + id));
     }
 
-    public User createUser(UserRegisterRequest request) {
-        User user = userMapper.fromRequestToUser(request);
-
+    public User createUser(UserPersistRequest request) {
+        User user = userMapper.fromRegisterRequestToUser(request);
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User user) {
-
+    public User updateUser(Long id, UserPersistRequest request) {
+        User user = getUserById(id);
+        userMapper.updateUserFromRequest(user, request);
+        return userRepository.save(user);
     }
 
     public void deleteUser(User user) {
-
+        userRepository.delete(user);
     }
 
 

@@ -1,6 +1,8 @@
 package org.combs.authentication_service.request;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.validation.constraints.Size;
@@ -36,11 +38,14 @@ public class UserPersistRequest {
     @NotBlank(message = "Full name is empty")
     private String fullName;
 
-    @NotBlank(message = "Role is empty")
+
     private RoleType role;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private boolean passwordsIsMatch = false;
+
     @JsonCreator
-    public static RoleType fromString(String stringRole) {
+    public static RoleType fromString(@NotBlank(message = "Role is empty") String stringRole) {
         return stringRole == null ? RoleType.STUDENT : RoleType.valueOf(stringRole.toUpperCase());
     }
 }

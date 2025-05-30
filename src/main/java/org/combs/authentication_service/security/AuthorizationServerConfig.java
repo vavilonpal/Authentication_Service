@@ -58,6 +58,7 @@ public class AuthorizationServerConfig {
         http
                 .securityMatcher(endpointsMatcher)
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/v1/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .apply(authorizationServerConfigurer);
@@ -65,8 +66,10 @@ public class AuthorizationServerConfig {
         http
                 .exceptionHandling(exceptions -> exceptions
                         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-                ).csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/oauth2/**"));
+                ).csrf(AbstractHttpConfigurer::disable
+                        /*.ignoringRequestMatchers("/oauth2/**")
+                        .ignoringRequestMatchers("/api/v1/users/register")*/
+                );
 
         return http.build();
     }
@@ -81,13 +84,16 @@ public class AuthorizationServerConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/.well-known/**").permitAll()
+                        .requestMatchers("/api/v1/users/**").permitAll()
+                        .requestMatchers("/api/v1/users").permitAll()
                         .anyRequest().authenticated())
                 // Form login handles the redirect to the login page from the
                 // authorization server filter chain
-                .formLogin(Customizer.withDefaults())
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/oauth2/**"));
-        ;
+                .csrf(AbstractHttpConfigurer::disable
+                        /*.ignoringRequestMatchers("/oauth2/**")
+                        .ignoringRequestMatchers("/api/v1/users/register")*/
+                );
+        http.formLogin().disable();
         return http.build();
     }
 

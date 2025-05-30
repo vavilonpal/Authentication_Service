@@ -16,24 +16,27 @@ public class RoleService {
 
 
     public Role getRoleByRoleType(RoleType roleType) {
+        System.out.println(roleType);
         String roleName = roleType.toString();
-        return roleRepository.findRoleByName(roleName)
+        System.out.println(roleName);
+        return roleRepository.findRoleByName(roleType)
                 .orElseThrow(() -> new RoleNotFoundException("Role not found by name" + roleName));
     }
 
     public Role getRoleById(Long id) {
-
+        return roleRepository.findById(id)
+                .orElseThrow(()-> new RoleNotFoundException("Role not found"));
     }
+   /* public Role getRoleByName(String roleName){
+        return  roleRepository.findRoleByName(roleName)
+                .orElseThrow(()-> new RoleNotFoundException("Role by name:"+roleName+" not found"));
+    }*/
 
-    public Role createRole(Role user) {
 
-    }
+    //todo Реилизация на потом
+    //public Role createRole(Role role) {}
 
-    public Role updateRole(Long id, Role user) {
+    //public Role updateRole(Long id, Role user) {}
 
-    }
-
-    public void deleteRole(Role user) {
-
-    }
+   // public void deleteRole(Role user) {}
 }
